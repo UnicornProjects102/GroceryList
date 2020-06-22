@@ -17,6 +17,13 @@
     <!-- <link rel="manifest" href="manifest.json" /> -->
   </head>
   <body>
+    <div id="noInternet">NO INTERNET</div>
+    <input
+      type="button"
+      id="buttonReload"
+      onclick="myCallback()"
+      value="dafes"
+    />
     <header>
       <img class="bars" src="images/bars-solid.svg" alt="" />
       <img
@@ -42,11 +49,12 @@
         </form>
       </div>
       <div class="display-items-container">
+        <h2 class="display-items-title" id="id" data-id="id">
+          Name of the list
+        </h2>
         <h4 class="display-items-action">Add action</h4>
-        <h2 class="display-items-title" id="id">Name of the list</h2>
         <div class="display-items-list"></div>
         <p class="empty-list">The list is empty.</p>
-        <!-- modal -->
 
         <button
           class="clear-button"
@@ -54,9 +62,9 @@
         >
           Clear all
         </button>
-
+        <!-- modal -->
         <div id="myModal" class="modal">
-          <!-- Modal content -->
+          <!-- modal content -->
           <div class="modal-content">
             <div class="modal-header">
               <h2>Delete all items?</h2>
@@ -89,26 +97,40 @@
 
     <div class="add-first-item">
       <h3>Add your first item</h3>
-      <img class="arrow" src="https://unicorn.kurocapture.pl/groceryList/images/arrow-right.svg" alt="" />
+      <img
+        class="arrow"
+        src="https://unicorn.kurocapture.pl/groceryList/images/arrow-right.svg"
+        alt=""
+      />
     </div>
     <div class="plus">
-      <img src="https://unicorn.kurocapture.pl/groceryList/images/plus-circle-solid.svg" alt="" />
+      <img
+        src="https://unicorn.kurocapture.pl/groceryList/images/plus-circle-solid.svg"
+        alt=""
+      />
     </div>
     <!-- side menu -->
     <div class="side_menu">
-      <div class="close_menu">
-        X
-      </div>
+      <!-- <div class="close_menu"> -->
+      <img
+        class="close_menu"
+        width="15px"
+        src="images/times-solid.svg"
+        alt="close"
+      />
+      <!-- </div> -->
       <a class="side_menu_add" href="">
         <span
-          ><img class="add_small" src="https://unicorn.kurocapture.pl/groceryList/images/plus-circle-solid.svg" alt=""
+          ><img
+            class="add_small"
+            src="https://unicorn.kurocapture.pl/groceryList/images/plus-circle-solid.svg"
+            alt=""
         /></span>
         Add a new list</a
       >
       <p class="your_lists_title">Your lists</p>
       <ul class="your_lists"></ul>
     </div>
-
     <!-- app js -->
     <script src="api_controler.js"></script>
     <script src="app.js"></script>

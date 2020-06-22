@@ -78,15 +78,26 @@ h1 {
   font-size: 18px;
 }
 
+input:focus {
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
+
 .add-items-action,
 .display-items-action {
   color: rgb(0, 0, 0);
-  width: 50%;
+  width: 70%;
+  margin-bottom: 0.5rem;
+  padding: 0.3rem;
   text-align: center;
   display: none;
   border-radius: 74px 74px 74px 74px;
   -moz-border-radius: 74px 74px 74px 74px;
   -webkit-border-radius: 74px 74px 74px 74px;
+  animation: fadeIn 0.5s ease;
 }
 
 @media screen and (min-width: 1030px) {
@@ -252,6 +263,20 @@ a {
 
 .crossed {
   text-decoration-line: line-through;
+}
+
+#buttonReload {
+  z-index: 100;
+  left: 150px;
+  top: 150px;
+  position: fixed;
+}
+
+#noInternet {
+  z-index: 100;
+  left: 100px;
+  top: 100px;
+  position: fixed;
 }
 
 .plus {
@@ -553,15 +578,25 @@ a {
 .your_lists {
   width: 100%;
 }
-.your_lists > li {
-  text-align: center;
+
+.list_link {
+  display: flex;
+  justify-content: center;
   padding: 0.3rem;
   list-style: none;
   width: 100%;
+  position: relative;
 }
 
-.your_lists > li:hover {
+.delete_list {
+  position: absolute;
+  top: 15%;
+  left: 90%;
+}
+
+.list_link:hover {
   background-color: #bbb8ec;
+  font-weight: 900;
   cursor: pointer;
 }
 

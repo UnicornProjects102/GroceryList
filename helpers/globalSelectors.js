@@ -1,0 +1,1 @@
+const listDOM = document.querySelector(".display-items-list");

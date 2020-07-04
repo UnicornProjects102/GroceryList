@@ -1,5 +1,5 @@
-function addList(listName, tempId, notes) {
-  fetch("https://kurocapture.pl/Unicorn/AddList", {
+async function addList(listName, tempId) {
+  return fetch("https://kurocapture.pl/Unicorn/AddList", {
     body: "listName=" + listName,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -8,33 +8,15 @@ function addList(listName, tempId, notes) {
   })
     .then((response) => response.text())
     .then((response) => {
-      let list = {};
-      list.id = response;
-      list.name = listName;
-      list.notes = notes;
-      saveListInStorage(list, tempId);
+      return response;
     })
-    .catch((error) => {
-      console.error("Error:", error);
-      let list = {};
-      list.id = tempId;
-      list.name = listName;
-      list.notes = notes;
-      // createItem(noteValue, response);
-      saveListInStorage(list, tempId);
+    .catch(() => {
+      return tempId;
     });
-  // .catch((error) => {
-  //   let list = {};
-  //   list.id = tempId;
-  //   list.name = listName;
-  //   list.notes = notes;
-  //   // createItem(noteValue, response);
-  //   saveListInStorage(list, tempId);
-  // });
 }
 
-function addTempListToServer(listName, tempId, notes) {
-  fetch("https://kurocapture.pl/Unicorn/AddList", {
+async function addTempListToServer(listName) {
+  return fetch("https://kurocapture.pl/Unicorn/AddList", {
     body: "listName=" + listName,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -43,44 +25,18 @@ function addTempListToServer(listName, tempId, notes) {
   })
     .then((response) => response.text())
     .then((response) => {
-      let list = {};
-      list.id = response;
-      list.name = listName;
-      list.notes = notes;
-      ReplaceTempListInStorage(list, tempId);
+      return response;
     });
 }
 
-function addNote(listID, noteValue, tempId) {
-  fetch("https://kurocapture.pl/Unicorn/AddNote", {
-    body: `listId=${listID}&noteValue=${noteValue}`,
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    method: "post",
-  })
-    .then((response) => response.text())
-    .then((response) => {
-      let note = {};
-      note.id = response;
-      note.value = noteValue;
-      note.listId = listID;
-      // createItem(noteValue, response);
-      saveItemInStorage(note, tempId);
-      // refreshList(listID);
-    })
-    .catch((error) => {
-      let note = {};
+async function addNote(listID, noteValue, tempId) {
+
+  let note = {};
       note.id = tempId;
       note.value = noteValue;
       note.listId = listID;
-      // createItem(noteValue, response);
-      saveItemInStorage(note, tempId);
-    });
-}
 
-function addTempNoteToServer(listID, noteValue, tempId) {
-  fetch("https://kurocapture.pl/Unicorn/AddNote", {
+  return fetch("https://kurocapture.pl/Unicorn/AddNote", {
     body: `listId=${listID}&noteValue=${noteValue}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -89,13 +45,25 @@ function addTempNoteToServer(listID, noteValue, tempId) {
   })
     .then((response) => response.text())
     .then((response) => {
-      let note = {};
       note.id = response;
-      note.value = noteValue;
-      note.listId = listID;
-      // createItem(noteValue, response);
-      ReplaceTempNoteInStorage(note, tempId);
-      // refreshList(listID);
+      return note;
+    })
+    .catch(() => {    
+      return note;
+    });
+}
+
+async function addTempNoteToServer(listID, noteValue) {
+  return fetch("https://kurocapture.pl/Unicorn/AddNote", {
+    body: `listId=${listID}&noteValue=${noteValue}`,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    method: "post",
+  })
+    .then((response) => response.text())
+    .then((response) => {
+      return response;
     });
 }
 
@@ -116,7 +84,7 @@ function refreshList(listID) {
     });
 }
 
-function deleteNote(noteID) {
+async function deleteNote(noteID) {
   fetch("https://kurocapture.pl/Unicorn/DeleteNote", {
     body: `noteId=${noteID}`,
     headers: {
@@ -126,7 +94,7 @@ function deleteNote(noteID) {
   });
 }
 
-function deleteList(listID) {
+async function deleteList(listID) {
   fetch("https://kurocapture.pl/Unicorn/DeleteList", {
     body: `listId=${listID}`,
     headers: {
@@ -136,7 +104,7 @@ function deleteList(listID) {
   });
 }
 
-function deleteAllNotes(listID) {
+async function deleteAllNotes(listID) {
   fetch("https://kurocapture.pl/Unicorn/DeleteAllNotesFromList", {
     body: `listId=${listID}`,
     headers: {
@@ -146,7 +114,7 @@ function deleteAllNotes(listID) {
   });
 }
 
-function editNote(noteID, newValue) {
+async function editNote(noteID, newValue) {
   fetch("https://kurocapture.pl/Unicorn/EditNote", {
     body: `noteId=${noteID}&newValue=${newValue}`,
     headers: {

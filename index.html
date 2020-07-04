@@ -17,21 +17,14 @@
     <!-- <link rel="manifest" href="manifest.json" /> -->
   </head>
   <body>
-    <div id="noInternet">NO INTERNET</div>
-    <input
-      type="button"
-      id="buttonReload"
-      onclick="myCallback()"
-      value="dafes"
-    />
     <header>
-      <img class="bars" src="images/bars-solid.svg" alt="" />
       <img
         class="logo"
-        src="https://unicorn.kurocapture.pl/groceryList/images/unicorn_icon.png"
+        src="https://unicorn-dev.pl/groceryList/images/unicorn_icon.png"
         alt="unicorn_icon"
       />
       <h1>Unicorn Grocery List</h1>
+      <img class="bars" src="images/bars-solid.svg" alt="" />
     </header>
     <div class="close">
       <img src="images/times-circle.svg" alt="close" />
@@ -49,8 +42,12 @@
         </form>
       </div>
       <div class="display-items-container">
+        <!-- no internet message -->
+<div class="no-internet-message">
+  <h3>No internet connection. Items will be saved locally.</h3>
+</div>
         <h2 class="display-items-title" id="id" data-id="id">
-          Name of the list
+          <p>Name of the list</p><div class="tooltip"><img src="/images/asterisk-solid.svg" alt="" srcset=""></div>
         </h2>
         <h4 class="display-items-action">Add action</h4>
         <div class="display-items-list"></div>
@@ -87,7 +84,7 @@
     <!-- add list container -->
     <div class="add-list-container">
       <h2 class="add-list-title">
-        The name of your list
+        Name your list
       </h2>
       <form>
         <input type="text" class="input-text-list input-text" />
@@ -95,35 +92,14 @@
       </form>
     </div>
 
-    <div class="add-first-item">
-      <h3>Add your first item</h3>
-      <img
-        class="arrow"
-        src="https://unicorn.kurocapture.pl/groceryList/images/arrow-right.svg"
-        alt=""
-      />
-    </div>
-    <div class="plus">
-      <img
-        src="https://unicorn.kurocapture.pl/groceryList/images/plus-circle-solid.svg"
-        alt=""
-      />
-    </div>
     <!-- side menu -->
     <div class="side_menu">
-      <!-- <div class="close_menu"> -->
-      <img
-        class="close_menu"
-        width="15px"
-        src="images/times-solid.svg"
-        alt="close"
-      />
-      <!-- </div> -->
+     
       <a class="side_menu_add" href="">
         <span
           ><img
             class="add_small"
-            src="https://unicorn.kurocapture.pl/groceryList/images/plus-circle-solid.svg"
+            src="/images/plus-circle-solid.svg"
             alt=""
         /></span>
         Add a new list</a
@@ -131,9 +107,27 @@
       <p class="your_lists_title">Your lists</p>
       <ul class="your_lists"></ul>
     </div>
+
+    <div class="footer-small-screen">
+<!-- add item small screen -->
+<div class="plus">
+  <img
+    src="/images/plus-circle-solid.svg"
+    alt=""
+  />
+</div>
+
+    </div>
+    
     <!-- app js -->
-    <script src="api_controler.js"></script>
+    <script src="helpers/globalSelectors.js"></script>    
+    <script src="api_controler.js"></script>    
+    <script src="helpers/storageHelper.js"></script>
+    <script src="helpers/validators.js"></script>
+    <script src="helpers/interfaceHelper.js"></script>
+    <script src="interfaceControler.js"></script>
     <script src="app.js"></script>
+    
     <!-- serviceWorker -->
     <!-- <script>
       if ("serviceWorker" in navigator) {

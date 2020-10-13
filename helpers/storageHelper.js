@@ -1,52 +1,48 @@
-function getListsFromStorage(){
-    return localStorage.getItem("lists")
+function getListsFromStorage() {
+  return localStorage.getItem("lists")
     ? JSON.parse(localStorage.getItem("lists"))
     : [];
 }
 
-function getTempListsFromStorage(){
-    return localStorage.getItem("tempLists")
-      ? JSON.parse(localStorage.getItem("tempLists"))
-      : [];
+function getTempListsFromStorage() {
+  return localStorage.getItem("tempLists")
+    ? JSON.parse(localStorage.getItem("tempLists"))
+    : [];
 }
 
-function getNotesFromStorage(){
-
-}
-
-function getTempNotesFromStorage(){
-    return localStorage.getItem("tempNotes")
+function getTempNotesFromStorage() {
+  return localStorage.getItem("tempNotes")
     ? JSON.parse(localStorage.getItem("tempNotes"))
     : [];
 }
 
-function addNoteToStorageList(note){
-    let listsFromStorage = getListsFromStorage();
-    listsFromStorage.map((list) => {
-        if (list.id == note.listId) {
-          list.notes.push(note);
-          localStorage.setItem("lists", JSON.stringify(listsFromStorage));
-        }
-      });
+function addNoteToStorageList(note) {
+  let listsFromStorage = getListsFromStorage();
+  listsFromStorage.map((list) => {
+    if (list.id == note.listId) {
+      list.notes.push(note);
+      localStorage.setItem("lists", JSON.stringify(listsFromStorage));
+    }
+  });
 }
 
-function addTempNoteToStorage(tempNote){
-    let tempNotes = getTempNotesFromStorage();
-    tempNotes.push(tempNote);
-    localStorage.setItem("tempNotes", JSON.stringify(tempNotes));
+function addTempNoteToStorage(tempNote) {
+  let tempNotes = getTempNotesFromStorage();
+  tempNotes.push(tempNote);
+  localStorage.setItem("tempNotes", JSON.stringify(tempNotes));
 }
 
-function getNotesFromList(listId){
-    let lists = getListsFromStorage();
-    let notes = lists.find(list => list.id == listId).notes;
-    return notes;
+function getNotesFromList(listId) {
+  let lists = getListsFromStorage();
+  let notes = lists.find(list => list.id == listId).notes;
+  return notes;
 }
 
-function deleteListFromStorage(listToRemoveId){
+function deleteListFromStorage(listToRemoveId) {
   let lists = getListsFromStorage();
   let listToRemove = lists.find(list => list.id == listToRemoveId);
   let index = lists.indexOf(listToRemove);
-  lists.splice(index,1);
+  lists.splice(index, 1);
   localStorage.setItem("lists", JSON.stringify(lists));
 }
 
@@ -63,7 +59,7 @@ function replaceTempListInStorage(newId, tempId) {
   localStorage.setItem("lists", JSON.stringify(listsFromStorage));
 }
 
-function removeTempList(id){
+function removeTempList(id) {
   let tempLists = getTempListsFromStorage();
   let tempListToRemove = tempLists.find(tempList => tempList.id == id);
   let index = tempLists.indexOf(tempListToRemove);
@@ -83,12 +79,12 @@ function replaceTempNoteInStorage(newNoteId, newListId, tempId) {
   localStorage.setItem("lists", JSON.stringify(listsFromStorage));
 }
 
-function removeTempNote(tempId){
-let tempNotes = getTempNotesFromStorage();
-let tempNoteToRemove = tempNotes.find(tempNote => tempNote.id == tempId);
-let index = tempNotes.indexOf(tempNoteToRemove);
-tempNotes.splice(index, 1);
-localStorage.setItem("tempNotes", JSON.stringify(tempNotes));
+function removeTempNote(tempId) {
+  let tempNotes = getTempNotesFromStorage();
+  let tempNoteToRemove = tempNotes.find(tempNote => tempNote.id == tempId);
+  let index = tempNotes.indexOf(tempNoteToRemove);
+  tempNotes.splice(index, 1);
+  localStorage.setItem("tempNotes", JSON.stringify(tempNotes));
 }
 
 function removeSingleFromStorage(noteID) {
@@ -102,7 +98,7 @@ function removeSingleFromStorage(noteID) {
           let index = notes.indexOf(note);
           notes.splice(index, 1);
           localStorage.setItem("lists", JSON.stringify(lists));
-          if(note.id.toString().length < 32)
+          if (note.id.toString().length < 32)
             removeTempNote(note.id)
         }
       });

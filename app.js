@@ -52,9 +52,11 @@ function whatDisplay() {
   if (listID) {
     currentListId = listID;
     showListView(listID);
+    showSideMenuView();
+    if (window.innerWidth < 600) toggleMenu()
   }
   else {
-    showSideMenuView();
+    showListView(listID);
   }
 }
 
@@ -64,14 +66,14 @@ async function createList(e) {
   let listName = inputTextList.value;
   let temporaryId = Math.floor(Math.random() * 10000);
   let listId = await addList(listName, temporaryId);
-  saveListInStorage( {id : listId, name : listName, notes : []}, temporaryId);
+  saveListInStorage({ id: listId, name: listName, notes: [] }, temporaryId);
   displayClearAll();
 }
 
 function saveListInStorage(list, tempId) {
   let lists = getListsFromStorage();
   if (list.id === tempId) {
-    let tempLists = getTempListsFromStorage(); 
+    let tempLists = getTempListsFromStorage();
     tempLists.push(list);
     localStorage.setItem("tempLists", JSON.stringify(tempLists));
   }
@@ -89,27 +91,26 @@ function removeList(trashIcon) {
 
 async function addItem(event) {
   event.preventDefault();
- if(validateInputValue(noteValueInput.value))
-  { 
+  if (validateInputValue(noteValueInput.value)) {
     let currentListId = getListIdFromUrl();
     if (currentListId) {
       let temporaryId = Math.floor(Math.random() * 10000);
-      addNoteToInterface({ value: noteValueInput.value, id: temporaryId});
+      addNoteToInterface({ value: noteValueInput.value, id: temporaryId });
       let note = await addNote(currentListId, noteValueInput.value, temporaryId);
       saveItemInStorage(note, temporaryId);
       noteValueInput.value = "";
     }
-     else alert("Something went wrong."); 
+    else alert("Something went wrong.");
   }
 }
 
 function showAction(element, text) {
-    element.classList.add("alert");
-    element.innerText = text;
-    noteValueInput.value = "";
-    setTimeout(function () {
-      element.classList.remove("alert");
-    }, 2500);
+  element.classList.add("alert");
+  element.innerText = text;
+  noteValueInput.value = "";
+  setTimeout(function () {
+    element.classList.remove("alert");
+  }, 2500);
 }
 
 function saveItemInStorage(note, tempId) {
@@ -118,72 +119,68 @@ function saveItemInStorage(note, tempId) {
     let element = document.getElementById(tempId);
     element.id = note.id;
   }
-  else 
-  {
-    addTempNoteToStorage({id: tempId, listId: note.listId})
+  else {
+    addTempNoteToStorage({ id: tempId, listId: note.listId })
     markNoteAsTemp(tempId);
   }
-  addNoteToStorageList(note); 
+  addNoteToStorageList(note);
 }
 
-async function checkLists(){
+async function checkLists() {
   let tempLists = JSON.parse(localStorage.getItem("tempLists"));
   if (!tempLists)
-      return; 
-
-    let listsFromStorage = JSON.parse(localStorage.getItem("lists"));
-    for (const tempList of tempLists)
-      for (const list of listsFromStorage)
-      {
-        if (tempList.id == list.id) {
-         let newId = await addTempListToServer(list.name);
-         replaceTempListInStorage(newId, tempList.id);
-         replaceTempListDOM(tempList.id, newId);
-        }
-      }
-  }
-
-  async function checkNotes(){
-    let tempNotes = JSON.parse(localStorage.getItem("tempNotes"));
-    if (!tempNotes)
     return;
 
-      let listsFromStorage = getListsFromStorage();
-      
-        for (const tempNote of tempNotes)
-      {
-        let listId;
-        let note;
-        for (const list of listsFromStorage)
-        {
-          note = list.notes.find((note) => note.id === tempNote.id);
-          if (list.notes.includes(note)) {
-            listId = list.id;
-          }
-        }
-      if(!note || !listId)
-        return;
-
-        let newId = await addTempNoteToServer(listId, note.value, tempNote.id);
-        replaceTempNoteInStorage(newId, listId, tempNote.id);
-        let element = document.getElementById(tempNote.id);
-        element.id = newId;
-        unmarkNoteAsTemp(newId)
+  let listsFromStorage = JSON.parse(localStorage.getItem("lists"));
+  for (const tempList of tempLists)
+    for (const list of listsFromStorage) {
+      if (tempList.id == list.id) {
+        let newId = await addTempListToServer(list.name);
+        replaceTempListInStorage(newId, tempList.id);
+        replaceTempListDOM(tempList.id, newId);
       }
     }
+}
 
-async function checkInternetAndSave() {  
+async function checkNotes() {
+  let tempNotes = JSON.parse(localStorage.getItem("tempNotes"));
+  if (!tempNotes)
+    return;
+
+  let listsFromStorage = getListsFromStorage();
+
+  for (const tempNote of tempNotes) {
+    let listId;
+    let note;
+    for (const list of listsFromStorage) {
+      note = list.notes.find((note) => note.id === tempNote.id);
+      if (list.notes.includes(note)) {
+        listId = list.id;
+      }
+    }
+    if (!note || !listId)
+      return;
+
+    let newId = await addTempNoteToServer(listId, note.value, tempNote.id);
+    replaceTempNoteInStorage(newId, listId, tempNote.id);
+    let element = document.getElementById(tempNote.id);
+    element.id = newId;
+    unmarkNoteAsTemp(newId)
+  }
+}
+
+async function checkInternetAndSave() {
   console.log("connected");
   await checkLists();
   await checkNotes();
   replaceListInUrl();
 }
 
-function replaceListInUrl(){
+function replaceListInUrl() {
   let listFromUrl = getListIdFromUrl();
   let listFromDom = getListFromDom();
-  if(listFromUrl != listFromDom)
-  location.replace(`${location.pathname}?list=${listFromDom}`);
+  if (listFromUrl != listFromDom)
+    location.replace(`${location.pathname}?list=${listFromDom}`);
 }
 
 function removeItems() {
@@ -229,19 +226,17 @@ async function removeSingleItem() {
   }
 }
 
-
-
 async function editItem(event) {
   event.preventDefault();
   let link = event.target.parentElement;
-  let groceryItemTitle = link.parentElement.firstElementChild.firstElementChild;
+  let groceryItemTitle = link.parentElement.firstElementChild.firstElementChild.nextElementSibling.firstElementChild;
+  console.log(groceryItemTitle);
   if (event.target.classList.contains("grocery-item-edit")) {
     let editable = document.createAttribute("contenteditable");
     editable.value = "true";
     groceryItemTitle.setAttributeNode(editable);
     groceryItemTitle.focus();
     setEndOfContenteditable(groceryItemTitle);
-
     event.target.style.display = "none";
     event.target.nextElementSibling.style.display = "inline-block";
   }
@@ -250,7 +245,7 @@ async function editItem(event) {
     let text =
       event.target.parentElement.parentElement.firstElementChild.firstElementChild.innerHTML;
     console.log(text);
-    if(navigator.onLine)
+    if (navigator.onLine)
       await editNote(noteID, text);
     editInStorage(text, noteID);
     event.target.style.display = "none";
@@ -291,23 +286,27 @@ function editInStorage(text, noteID) {
 function check() {
   event.preventDefault();
   let link = event.target.parentElement;
-  let text = link.parentElement.parentElement.firstElementChild;
-
-  if (event.target.parentElement.classList.contains("grocery-item-check")) {
+  let text = link.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling;
+  console.log(text);
+  if (link.classList.contains("grocery-item-check")) {
     text.classList.toggle("crossed");
+    if (text.classList.contains("crossed")) {
+      link.innerHTML = `<img width="15rem" src="images/check-square.svg" alt="check">`
+    } else {
+      link.innerHTML = `<img width="15rem" src="images/square-regular.svg" alt="check">`
+    }
   }
 }
 
 function saveItemEnter(event) {
   let edit =
-  event.target.parentElement.parentElement.lastElementChild.lastElementChild.previousElementSibling;
+    event.target.parentElement.parentElement.parentElement.lastElementChild.lastElementChild.previousElementSibling;
   let save =
-  event.target.parentElement.parentElement.lastElementChild.lastElementChild;
+    event.target.parentElement.parentElement.parentElement.lastElementChild.lastElementChild;
   if (
     event.target.classList.contains("grocery-item-value") &&
     event.keyCode === 13
   ) {
-    console.log("enter");
     let text = event.target.innerHTML;
     let noteID = event.target.parentElement.id;
     save.style.display = "none";

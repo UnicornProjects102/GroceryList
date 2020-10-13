@@ -23,13 +23,13 @@ plus.addEventListener("click", showAdding);
 
 
 function showListAdding(e) {
-  e.preventDefault();
+  if (e !== undefined) e.preventDefault();
   setCssDisplayProperty([sideMenu, addFirstListLabel, displayItemsCont, addItemsCont], "none");
   setCssDisplayProperty([addListContainer], "inline-block");
   inputTextList.value = "";
 }
 
-function showNotesAddUI(){
+function showNotesAddUI() {
   setCssDisplayProperty([content], "block");
   setCssDisplayProperty([displayItemsCont, addItemsCont], "flex");
   setCssDisplayProperty([addListContainer], "none");
@@ -40,66 +40,69 @@ function closeAdding() {
   close.style.display = "none";
 }
 
-function markNoteAsTemp(elementId){
+function markNoteAsTemp(elementId) {
   let tempNoteUI = document.getElementById(elementId);
   tempNoteUI.lastElementChild.classList.add("showAsterisk")
 }
 
-function unmarkNoteAsTemp(id){
+function unmarkNoteAsTemp(id) {
   let noteUI = document.getElementById(id);
   noteUI.lastElementChild.classList.remove("showAsterisk")
 }
 
-function replaceTempListDOM(tempListID, newId){
-let tempListUI = displayItemsCont.firstElementChild.nextElementSibling;
-if (tempListUI.id == tempListID){
-  tempListUI.firstElementChild.nextElementSibling.classList.remove("showAsterisk");
-  displayItemsTitle.id = newId;
+function replaceTempListDOM(tempListID, newId) {
+  let tempListUI = displayItemsCont.firstElementChild.nextElementSibling;
+  if (tempListUI.id == tempListID) {
+    tempListUI.firstElementChild.nextElementSibling.classList.remove("showAsterisk");
+    displayItemsTitle.id = newId;
+  }
 }
 
-}
-
-function displayListName(listID, element){
+function displayListName(listID, element) {
   let lists = getListsFromStorage();
   lists.map((list) => {
     if (list.id == listID) {
       element.firstElementChild.innerHTML = `${list.name}`;
       element.id = list.id;
       if (typeof list.id === "number") {
-          markListAsTemp(element);
+        markListAsTemp(element);
       }
     }
   });
 }
 
-function markListAsTemp(element){
+function markListAsTemp(element) {
   element.firstElementChild.nextElementSibling.classList.add("showAsterisk");
 }
 
-function showListView(listID){
+function showListView(listID) {
   let lists = getListsFromStorage();
-  if (!lists) {
+  console.log(lists);
+  if (lists.length < 1) {
     addFirstListLabel.style.display = "inline-block";
-  } 
+    sideMenu.style.display = "none";
+    displayItemsCont.style.display = "none";
+    addItemsCont.style.display = "none";
+  }
   else {
     displayStorage(listID);
   }
 }
 
-function showSideMenuView(){
+function showSideMenuView() {
   sideMenu.style.display = "flex";
-  if(yourLists.childElementCount < 1){
+  let lists = getListsFromStorage();
+  if (!lists || lists.length < 1) {
     yourLists.innerHTML = `<li class="no_lists_message">
     <p>No lists added</p>
     </li>`
   }
 }
 
-function setCssDisplayProperty(elements, displayOption){
-  for (const element of elements){
+function setCssDisplayProperty(elements, displayOption) {
+  for (const element of elements) {
     element.style.display = displayOption;
   }
-    
 }
 
 function showAdding() {
@@ -118,68 +121,34 @@ function toggleMenu() {
   }
 }
 
-function setListView(){
+function setListView() {
   addListContainer.style.display = "none";
-  sideMenu.style.display = "none";
   content.style.display = "block";
 }
 
 function displayList(e) {
-  if (e.target.classList.contains("list_link") ||e.target.parentElement.classList.contains("list_link")) {
-    if(e.target.id)
+  if (e.target.classList.contains("list_link") || e.target.parentElement.classList.contains("list_link")) {
+    if (e.target.id)
       location.replace(`${window.location.pathname}?list=${e.target.id}`);
-    // setListView();     
-    // if (localStorage.tempLists && listID.length < 10) {
-    //   displayStorage(listID)
-    // }
-    //  else {
-    //   location.replace(`${window.location.pathname}?list=${listID}`);
-    // }
   }
 }
 
 function displayStorage(listID) {
   content.style.display = "block";
   displayListName(listID, displayItemsTitle);
-  let notes = getNotesFromList(listID); 
+  let notes = getNotesFromList(listID);
   addNotesToInterface(notes);
   markTempNotes(notes);
 
-    // if (localStorage.tempLists) {
-    //   listDOM.innerHTML = "";
-    //   listsFromStorage.find((list) => {
-    //     if (list.id == listID) {
-    //       list.notes.map((note) => {
-    //         AddNoteToInterface(note.value, note.id);
-    //         displayItemsTitle.innerHTML = `${list.name}`;
-    //         document.getElementById(`${note.id}`).style.opacity = "0.5";
-    //       });
-    //     }
-    //   });
-    // }
-
-    // if (localStorage.tempNotes || localStorage.tempLists) {
-    //   lists.find((list) => {
-    //     if (list.id === listID) {
-    //       list.notes.map((note) => {
-    //         AddNoteToInterface(note.value, note.id);
-    //         if (typeof note.id === "number") {
-    //           document.getElementById(`${note.id}`).style.opacity = "0.5";
-    //         }
-    //       });
-    //     }
-    //   });
-    // } else refreshList(listID);
-  
   displayClearAll();
 }
 
-function markTempNotes(notes){
-notes.forEach(note => {
-  if(typeof note.id == "number" ){
-    markNoteAsTemp(note.id)
-  }
-})
+function markTempNotes(notes) {
+  notes.forEach(note => {
+    if (typeof note.id == "number") {
+      markNoteAsTemp(note.id)
+    }
+  })
 }
 
 function displayClearAll() {
@@ -199,7 +168,7 @@ function addNotesToInterface(notes) {
   displayClearAll();
 }
 
-function addNoteToInterface(note){
+function addNoteToInterface(note) {
   let div = document.createElement("div");
   div.classList.add("grocery-item");
   div.innerHTML = generateNoteHtml(note.value, note.id);
@@ -207,7 +176,7 @@ function addNoteToInterface(note){
   displayClearAll();
 }
 
-function removeListFromMenu(trashIcon){
+function removeListFromMenu(trashIcon) {
   let lists = trashIcon.parentElement.parentElement;
   let listToDelete = trashIcon.parentElement;
   lists.removeChild(listToDelete);
@@ -239,6 +208,6 @@ function addListsToMenu() {
   }
 }
 
-function getListFromDom(){
+function getListFromDom() {
   return displayItemsTitle.id;
 }

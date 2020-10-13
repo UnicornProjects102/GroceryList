@@ -1,140 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Unicorn Grocery List</title>
-    <!-- main css -->
-    <link rel="stylesheet" href="main.css" type="text/css" />
-    <!-- fonts -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Dancing+Script|Raleway&display=swap"
-      rel="stylesheet"
-    />
 
-    <!-- manifest -->
-    <!-- <link rel="manifest" href="manifest.json" /> -->
-  </head>
-  <body>
-    <header>
-      <img
-        class="logo"
-        src="https://unicorn-dev.pl/groceryList/images/unicorn_icon.png"
-        alt="unicorn_icon"
-      />
-      <h1>Unicorn Grocery List</h1>
-      <img class="bars" src="images/bars-solid.svg" alt="" />
-    </header>
-    <div class="close">
-      <img src="images/times-circle.svg" alt="close" />
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Unicorn Grocery List</title>
+  <!-- main css -->
+  <link rel="stylesheet" href="main.css" type="text/css" />
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Raleway:wght@400;700&display=swap"
+    rel="stylesheet">
+  <!-- manifest -->
+  <link rel="manifest" href="manifest.json" />
+</head>
 
-    <div class="content">
-      <div class="add-items-container">
-        <h4 class="add-items-action">Add action</h4>
-        <h2 class="add-items-title">
-          Add a grocery item
-        </h2>
-        <form>
-          <input type="text" class="input-text" />
-          <button type="submit" class="button addItemBtn">Add the item</button>
-        </form>
+<body>
+  <header>
+    <img class="logo" src="https://unicorn-dev.pl/groceryList/images/unicorn_icon.png" alt="unicorn_icon" />
+    <h1>Unicorn Grocery List</h1>
+    <img class="bars" src="images/bars-solid.svg" alt="" />
+  </header>
+  <div class="content">
+    <div class="add-items-container">
+      <h4 class="add-items-action">Add action</h4>
+      <div class="close">
+        <img src="images/times-circle.svg" alt="close" />
       </div>
-      <div class="display-items-container">
-        <!-- no internet message -->
-<div class="no-internet-message">
-  <h3>No internet connection. Items will be saved locally.</h3>
-</div>
-        <h2 class="display-items-title" id="id" data-id="id">
-          <p>Name of the list</p><div class="tooltip"><img src="/images/asterisk-solid.svg" alt="" srcset=""></div>
-        </h2>
-        <h4 class="display-items-action">Add action</h4>
-        <div class="display-items-list"></div>
-        <p class="empty-list">The list is empty.</p>
+      <form>
+        <input type="text" class="input-text" />
+        <button type="submit" class="button addItemBtn">Add new item</button>
+      </form>
+    </div>
+    <div class="display-items-container">
+      <!-- no internet message -->
+      <div class="no-internet-message">
+        <h3>No internet connection. Items will be saved locally.</h3>
+      </div>
+      <h2 class="display-items-title" id="id" data-id="id">
+        <p>Name of the list</p>
+        <div class="tooltip"><img src="https://unicorn-dev.pl/groceryList/images/asterisk-solid.svg" alt="" srcset="" />
+        </div>
+      </h2>
+      <h4 class="display-items-action">Add action</h4>
+      <div class="display-items-list"></div>
+      <p class="empty-list">The list is empty.</p>
 
-        <button
-          class="clear-button"
-          onclick="document.getElementById('myModal').style.display= 'block'"
-        >
-          Clear all
-        </button>
-        <!-- modal -->
-        <div id="myModal" class="modal">
-          <!-- modal content -->
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2>Delete all items?</h2>
-            </div>
-            <div class="modal-body">
-              <button class="yes">yes</button>
-              <button class="no">no</button>
-            </div>
+      <button class="clear-button" onclick="document.getElementById('myModal').style.display= 'block'">
+        Clear all
+      </button>
+      <!-- modal -->
+      <div id="myModal" class="modal">
+        <!-- modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Delete all items?</h2>
+          </div>
+          <div class="modal-body">
+            <button class="yes">yes</button>
+            <button class="no">no</button>
           </div>
         </div>
       </div>
     </div>
-    <!-- add list button -->
-    <div class="add_first_list">
-      <p>
-        Do you need many things for your unicorn but can't remember them all?
-      </p>
-      <button class="first_list_btn">Add a list</button>
-    </div>
-    <!-- add list container -->
-    <div class="add-list-container">
-      <h2 class="add-list-title">
-        Name your list
-      </h2>
-      <form>
-        <input type="text" class="input-text-list input-text" />
-        <button type="submit" class="create-list-btn">Add</button>
-      </form>
-    </div>
+  </div>
+  <!-- add list button -->
+  <div class="add_first_list">
+    <p>
+      Do you need many things for your unicorn but can't remember them all?
+    </p>
+    <button class="first_list_btn">Add a list</button>
+  </div>
+  <!-- add list container -->
+  <div class="add-list-container">
+    <h2 class="add-list-title">
+      Name your list
+    </h2>
+    <form>
+      <input type="text" class="input-text-list input-text" />
+      <button type="submit" class="create-list-btn">Add</button>
+    </form>
+  </div>
 
-    <!-- side menu -->
-    <div class="side_menu">
-     
-      <a class="side_menu_add" href="">
-        <span
-          ><img
-            class="add_small"
-            src="/images/plus-circle-solid.svg"
-            alt=""
-        /></span>
-        Add a new list</a
-      >
-      <p class="your_lists_title">Your lists</p>
-      <ul class="your_lists"></ul>
-    </div>
+  <!-- side menu -->
+  <div class="side_menu">
 
-    <div class="footer-small-screen">
-<!-- add item small screen -->
-<div class="plus">
-  <img
-    src="/images/plus-circle-solid.svg"
-    alt=""
-  />
-</div>
+    <a class="side_menu_add" href="">
+      <span><img class="add_small" src="https://unicorn-dev.pl/groceryList/images/plus-circle-solid.svg"
+          alt="" /></span>
+      Add a new list</a>
+    <p class="your_lists_title">Your lists</p>
+    <ul class="your_lists"></ul>
+  </div>
 
+  <div class="footer-small-screen">
+    <!-- add item small screen -->
+    <div class="plus">
+      <img src="https://unicorn-dev.pl/groceryList/images/plus-circle-solid.svg" alt="" srcset="" />
     </div>
-    
-    <!-- app js -->
-    <script src="helpers/globalSelectors.js"></script>    
-    <script src="api_controler.js"></script>    
-    <script src="helpers/storageHelper.js"></script>
-    <script src="helpers/validators.js"></script>
-    <script src="helpers/interfaceHelper.js"></script>
-    <script src="interfaceControler.js"></script>
-    <script src="app.js"></script>
-    
-    <!-- serviceWorker -->
-    <!-- <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("sw.js").then(function () {
-          console.log("Service Worker Registered");
-        });
-      }
-    </script> -->
-  </body>
+    <footer class="footer"> &copy; Copyright 2020 by <a href="https://unicorn-dev.pl/portfolio">Unicorn Projects</a>
+    </footer>
+  </div>
+
+  <!-- app js -->
+  <script src="helpers/globalSelectors.js"></script>
+  <script src="api_controler.js"></script>
+  <script src="helpers/storageHelper.js"></script>
+  <script src="helpers/validators.js"></script>
+  <script src="helpers/interfaceHelper.js"></script>
+  <script src="interfaceControler.js"></script>
+  <script src="app.js"></script>
+
+  <!-- serviceWorker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").then(function () {
+        console.log("Service Worker Registered");
+      });
+    }
+  </script>
+</body>
+
 </html>

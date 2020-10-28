@@ -24,7 +24,7 @@ plus.addEventListener("click", showAdding);
 
 function showListAdding(e) {
   if (e !== undefined) e.preventDefault();
-  setCssDisplayProperty([sideMenu, addFirstListLabel, displayItemsCont, addItemsCont], "none");
+  setCssDisplayProperty([sideMenu, addFirstListLabel, displayItemsCont, addItemsCont, plus], "none");
   setCssDisplayProperty([addListContainer], "inline-block");
   inputTextList.value = "";
 }
@@ -77,12 +77,21 @@ function markListAsTemp(element) {
 
 function showListView(listID) {
   let lists = getListsFromStorage();
-  console.log(lists);
   if (lists.length < 1) {
     addFirstListLabel.style.display = "inline-block";
     sideMenu.style.display = "none";
     displayItemsCont.style.display = "none";
     addItemsCont.style.display = "none";
+  }
+  if (listID === "id") {
+    sideMenu.style.display = "block";
+    displayItemsCont.style.display = "none";
+    addItemsCont.style.display = "none";
+    plus.style.display = "none";
+    addFirstListLabel.style.display = "none";
+    if (window.innerWidth <= 600) {
+      addFirstListLabel.style.display = "inline-block";
+    }
   }
   else {
     displayStorage(listID);

@@ -1,8 +1,7 @@
-function validateInputValue(value)
-{
+function validateInputValue(value) {
     if (value === "") {
-        showAction(addItemsAction, "Please, add a grocery item.");
+        showAction(addItemsAction, "The field cannot be empty.");
         return false;
-    } 
+    }
     return true;
 }

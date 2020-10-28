@@ -1,4 +1,3 @@
-
 const createListBtn = document.querySelector(".create-list-btn");
 const inputTextList = document.querySelector(".input-text-list");
 const addListBtn = document.querySelector("#add-list-btn");
@@ -62,12 +61,14 @@ function whatDisplay() {
 
 async function createList(e) {
   e.preventDefault();
-  showNotesAddUI();
-  let listName = inputTextList.value;
-  let temporaryId = Math.floor(Math.random() * 10000);
-  let listId = await addList(listName, temporaryId);
-  saveListInStorage({ id: listId, name: listName, notes: [] }, temporaryId);
-  displayClearAll();
+  if (validateInputValue(inputTextList.value)) {
+    showNotesAddUI();
+    let listName = inputTextList.value;
+    let temporaryId = Math.floor(Math.random() * 10000);
+    let listId = await addList(listName, temporaryId);
+    saveListInStorage({ id: listId, name: listName, notes: [] }, temporaryId);
+    displayClearAll();
+  }
 }
 
 function saveListInStorage(list, tempId) {
@@ -87,6 +88,8 @@ function removeList(trashIcon) {
   let listToRemoveId = removeListFromMenu(trashIcon);
   deleteList(listToRemoveId);
   deleteListFromStorage(listToRemoveId);
+  if (listToRemoveId === getListIdFromUrl())
+    location.replace(`${location.pathname}?list=id`);
 }
 
 async function addItem(event) {

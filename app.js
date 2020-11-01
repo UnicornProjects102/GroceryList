@@ -219,7 +219,7 @@ async function removeSingleItem() {
   event.preventDefault();
   let link = event.target.parentElement;
   let text = link.parentElement.parentElement.firstElementChild.innerHTML;
-  let noteID = link.parentElement.parentElement.firstElementChild.id;
+  let noteID = link.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.id;
   let groceryItem = event.target.parentElement.parentElement.parentElement;
   if (event.target.parentElement.classList.contains("grocery-item-delete")) {
     listDOM.removeChild(groceryItem);
@@ -231,10 +231,10 @@ async function removeSingleItem() {
 
 async function editItem(event) {
   event.preventDefault();
-  let link = event.target.parentElement;
-  let groceryItemTitle = link.parentElement.firstElementChild.firstElementChild.nextElementSibling.firstElementChild;
-  console.log(groceryItemTitle);
   if (event.target.classList.contains("grocery-item-edit")) {
+    let link = event.target.parentElement;
+    let groceryItemTitle = link.parentElement.firstElementChild.firstElementChild.nextElementSibling.firstElementChild;
+    console.log(groceryItemTitle);
     let editable = document.createAttribute("contenteditable");
     editable.value = "true";
     groceryItemTitle.setAttributeNode(editable);
@@ -244,6 +244,9 @@ async function editItem(event) {
     event.target.nextElementSibling.style.display = "inline-block";
   }
   if (event.target.classList.contains("grocery-item-save")) {
+    let link = event.target.parentElement;
+    let groceryItemTitle = link.parentElement.firstElementChild.firstElementChild.nextElementSibling.firstElementChild;
+    console.log(groceryItemTitle);
     let noteID = link.parentElement.firstElementChild.id;
     let text =
       event.target.parentElement.parentElement.firstElementChild.firstElementChild.innerHTML;
@@ -289,8 +292,7 @@ function editInStorage(text, noteID) {
 function check() {
   event.preventDefault();
   let link = event.target.parentElement;
-  let text = link.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling;
-  console.log(text);
+  let text = link.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.firstElementChild;
   if (link.classList.contains("grocery-item-check")) {
     text.classList.toggle("crossed");
     if (text.classList.contains("crossed")) {

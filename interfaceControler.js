@@ -83,7 +83,7 @@ function showListView(listID) {
     displayItemsCont.style.display = "none";
     addItemsCont.style.display = "none";
   }
-  if (listID === "id") {
+  if (listID === "id" || !listID) {
     sideMenu.style.display = "block";
     displayItemsCont.style.display = "none";
     addItemsCont.style.display = "none";

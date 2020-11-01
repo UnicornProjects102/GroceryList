@@ -199,7 +199,7 @@ function addListToMenu(list) {
     yourLists.innerHTML += `
   <li class="list_link" id="${list.id}">
   <p id="${list.id}">${list.name}</p>
-  <a onclick="removeList(this)" class="delete_list"><img width="15rem" src="images/trash-alt.svg" alt="trash"></a>
+  <a onclick="removeList(this)" class="delete_list"><img width="15rem" src="https://unicorn-dev.pl/groceryList/images/trash-alt.svg" alt="trash"></a>
   </li>
   `;
   }
@@ -211,7 +211,7 @@ function addListsToMenu() {
     lists.map((list) => {
       yourLists.innerHTML += `<li class="list_link" id="${list.id}">
       <p id="${list.id}">${list.name}</p>
-      <a onclick="removeList(this)" class="delete_list"><img width="15rem" src="images/trash-alt.svg" alt="trash"></a>
+      <a onclick="removeList(this)" class="delete_list"><img width="15rem" src="https://unicorn-dev.pl/groceryList/images/trash-alt.svg" alt="trash"></a>
       </li>`;
     });
   }

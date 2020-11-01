@@ -296,9 +296,9 @@ function check() {
   if (link.classList.contains("grocery-item-check")) {
     text.classList.toggle("crossed");
     if (text.classList.contains("crossed")) {
-      link.innerHTML = `<img width="15rem" src="images/check-square.svg" alt="check">`
+      link.innerHTML = `<img width="15rem" src="https://unicorn-dev.pl/groceryList/images/check-square.svg" alt="check">`
     } else {
-      link.innerHTML = `<img width="15rem" src="images/square-regular.svg" alt="check">`
+      link.innerHTML = `<img width="15rem" src="https://unicorn-dev.pl/groceryList/images/square-regular.svg" alt="check">`
     }
   }
 }
